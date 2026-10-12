@@ -1,0 +1,14 @@
+# Zero-setup local profile: in-memory H2, no MySQL needed.
+#   JWT_SECRET=$(openssl rand -base64 48) mvn spring-boot:run -Dspring-boot.run.profiles=h2
+spring:
+  datasource:
+    url: jdbc:h2:mem:b2b;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect

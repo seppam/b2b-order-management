@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: b2b-order-management
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/b2b_order_mgmt?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false # Recommended enterprise practice to avoid OSIV-related performance/connection issues
+
+# Custom application properties
+app:
+  jwt:
+    # Base64-encoded HMAC key, at least 256 bits. REQUIRED: set the JWT_SECRET environment variable
+    # (generate one with: openssl rand -base64 48). No default is shipped on purpose.
+    secret: ${JWT_SECRET}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 hours in milliseconds
+  rate-limit:
+    # Bucket4j configurations for standard API endpoints
+    capacity: 100
+    refill-tokens: 100
+    duration-seconds: 3600 # Refill 100 tokens per hour

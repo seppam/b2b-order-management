@@ -1,0 +1,21 @@
+# Test-only configuration (throwaway key, in-memory DB). Not a real secret.
+spring:
+  datasource:
+    url: jdbc:h2:mem:b2btest;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+app:
+  jwt:
+    secret: dGVzdC1vbmx5LWtleS10ZXN0LW9ubHkta2V5LXRlc3Qtb25seS1rZXktdGVzdC1vbmx5
+    expiration-ms: 3600000
+  rate-limit:
+    capacity: 1000
+    refill-tokens: 1000
+    duration-seconds: 3600
